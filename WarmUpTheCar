@@ -1,0 +1,32 @@
+// WarmUpTheCar
+// Turn on car heater based on time set in a flow and outside temperature
+
+// timeToLeave should be set using 24 hour format
+// Argument 1 is the time to leave, argument 2 is the outside temperature
+var timeToLeave = args[0];
+var outSideTemp = args[1];
+
+timeToLeave = timeToLeave.split(":");
+timeToLeave = Number(timeToLeave[0])*60 + Number(timeToLeave[1]) + 30;
+var now = new Date().getHours()*60 + new Date().getMinutes();
+
+if (now > timeToLeave) return false;
+
+var ahead = Math.floor ((outSideTemp-12)/-0,1436);
+var timeToWarmUp = (((timeToLeave-ahead)));
+
+var before = Math.floor((outSideTemp-12)/-0.28);
+var toSleep = timeToLeave - now - before;
+var shuttoff = timeToLeave - now + 30;
+
+if ( toSleep < 0 ) toSleep = 1;
+
+_.forEach(devices, device => {
+    if (device.name == "Car Heater") {
+        _.delay(function() {device.setCapabilityValue('onoff', true);} , toSleep*60*1000);
+        _.delay(function() {device.setCapabilityValue('onoff', false);} , shuttoff*60*1000);
+    }
+     
+});
+
+return true;
