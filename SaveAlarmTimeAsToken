@@ -1,0 +1,18 @@
+// Get Alarm Time
+var AlarmName1 = args[0];
+// var AlarmName1 = "Alarm 1";
+var alarmTime ="";
+
+let alarms = await Homey.alarms.getAlarms();
+
+Object.values(alarms).forEach(alarm => {
+if (alarm.name = AlarmName1) {
+        alarmTime=(alarm.time);
+        log(alarm.name);
+        log(alarm.time);
+}
+});
+
+await setTagValue(AlarmName1, {type: "string", title: AlarmName1}, alarmTime );
+
+return true
