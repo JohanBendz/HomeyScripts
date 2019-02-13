@@ -1,0 +1,62 @@
+// Sophämtning i Södertälje
+
+var address = ""; // add your adress here
+
+// Define Tokens
+let TagName1="Kärl 1";
+let TagName2="Kärl 2";
+let TagName3="Sophämtning i morgon";
+let TagName4="Kärl som hämtas";
+
+// Get data from JSON feed
+async function fetchAsync () {
+let data = await (await fetch('https://www.telge.se/api/GarbageCollectionSearch/Schedule?address='+address)).json();
+return data;
+}
+
+fetchAsync()
+    .then(data => {
+        
+        // Work with JSON data here
+        binone = data[0]["CalendarSchedules"][0];
+        bintwo = data[1]["CalendarSchedules"][0];
+
+        // Log to console 
+        console.log("Kärl 1 hämtas "+binone);
+        console.log("Kärl 2 hämtas "+bintwo);
+
+        // Save result to HomeyScript Tags/tokens 
+        setTagValue(TagName1, {type: "string", title: TagName1}, binone );
+        setTagValue(TagName2, {type: "string", title: TagName2}, bintwo );
+
+// Add a day to today
+function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+ // Check if bins are due for collection
+    var today = new Date().toISOString().substr(0, 10);
+    var tomorrow = addDays(today,1);
+    var tomorrow2 = tomorrow.toISOString().substr(0, 10);
+
+    if (tomorrow2 == binone){
+       console.log("Hämtning av Kärl 1 i morgon");
+       setTagValue(TagName3, {type: "boolean", title: TagName3}, true );
+       setTagValue(TagName4, {type: "string", title: TagName4}, "Kärl 1" );
+    } else if (tomorrow2 == bintwo){
+       console.log("Hämtning av Kärl 2 i morgon");
+       setTagValue(TagName3, {type: "boolean", title: TagName3}, true );
+       setTagValue(TagName4, {type: "string", title: TagName4}, "Kärl 2" );
+    } else {
+       console.log("Ingen sophämtning i morgon");
+       setTagValue(TagName3, {type: "boolean", title: TagName3}, false );
+       setTagValue(TagName4, {type: "string", title: TagName4}, "Ingen hämtning" );
+    };
+    
+        })
+    // Error handling    
+    .catch(reason => console.log(reason.message))
+
+return true;
