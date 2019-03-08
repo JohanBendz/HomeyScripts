@@ -18,8 +18,8 @@ fetchAsync()
     .then(data => {
         
         // Work with JSON data here
-        binone = data[0]["CalendarSchedules"][0];
-        bintwo = data[1]["CalendarSchedules"][0];
+        binone = data[1]["CalendarSchedules"][0];
+        bintwo = data[0]["CalendarSchedules"][0];
 
         // Log to console 
         console.log("Kärl 1 hämtas "+binone);
