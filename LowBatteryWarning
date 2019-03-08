@@ -1,0 +1,19 @@
+// Low Battery Warning
+let count = 0;
+let devices = await Homey.devices.getDevices();
+
+Object.values(devices).forEach(device => {
+   if (device.state.measure_battery != null && device.state.measure_battery < 30) {
+     console.log(device.name, 'in', device.zone.name, 'has a battery level at', device.state.measure_battery ? device.state.measure_battery + '%' : '?');
+     count ++;
+   }
+});
+
+if (count == 1) {
+   say("Good evening family! I just want to make you all aware of that there is one device with low battery.");
+}
+else if (count > 1) {
+   say("Good evening family! I just want to make you all aware of that there is" + count + ' devices with low battery.');
+}
+
+return count > 0;
