@@ -1,8 +1,6 @@
 // Trashcollection
 
 // Define Tokens
-let TagName1="Kärl 1";
-let TagName2="Kärl 2";
 let TagName3="Sophämtning i morgon";
 let TagName4="Kärl som hämtas";
 
