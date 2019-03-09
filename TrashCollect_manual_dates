@@ -1,0 +1,77 @@
+// Trashcollection
+
+// Define Tokens
+let TagName1="Kärl 1";
+let TagName2="Kärl 2";
+let TagName3="Sophämtning i morgon";
+let TagName4="Kärl som hämtas";
+
+// Define static information
+// Collection dates for Trashbin 1
+var Trashbin1CollectDates= [
+                '2019-01-01',
+                '2019-02-01',
+                '2019-03-01',
+                '2019-04-01',
+                '2019-05-01',
+                '2019-06-01',
+                '2019-07-01',
+                '2019-08-01',
+                '2019-09-01',
+                '2019-10-01',
+                '2019-11-01',
+                '2019-12-01'
+                ];
+
+// Collection dates for Trashbin 2
+var Trashbin2CollectDates= [
+                '2019-01-03',
+                '2019-02-03',
+                '2019-03-03',
+                '2019-04-03',
+                '2019-05-03',
+                '2019-06-03',
+                '2019-07-03',
+                '2019-08-03',
+                '2019-09-03',
+                '2019-10-03',
+                '2019-11-03',
+                '2019-12-03'
+                ];
+
+// Add a day to today
+function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+// Define dates
+var today = new Date().toISOString().substr(0, 10);
+var tomorrow = addDays(today,1);
+var tomorrow2 = tomorrow.toISOString().substr(0, 10);
+
+// Set default values
+   setTagValue(TagName3, {type: "boolean", title: TagName3}, false );
+   setTagValue(TagName4, {type: "string", title: TagName4}, "Ingen hämtning" );
+
+// Check if bins are due for collection
+// Check if date for bin 1 is within array
+Trashbin1CollectDates.forEach(function(Trashbin1CollectDate) {
+  if (Trashbin1CollectDate === tomorrow2) {
+      console.log("Hämtning av Kärl 1 i morgon");
+      setTagValue(TagName3, {type: "boolean", title: TagName3}, true );
+      setTagValue(TagName4, {type: "string", title: TagName4}, "Kärl 1" );
+  }
+});
+  
+// Check if date for bin 2 is within array
+Trashbin2CollectDates.forEach(function(Trashbin2CollectDate) {
+  if (Trashbin2CollectDate === tomorrow2) {
+      console.log("Hämtning av Kärl 2 i morgon");
+      setTagValue(TagName3, {type: "boolean", title: TagName3}, true );
+      setTagValue(TagName4, {type: "string", title: TagName4}, "Kärl 2" );
+  }
+});
+
+return true;
