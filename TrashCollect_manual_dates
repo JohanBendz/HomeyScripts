@@ -3,6 +3,7 @@
 // Define Tokens
 let TagName3="Sophämtning i morgon";
 let TagName4="Kärl som hämtas";
+var collectstatus = false;
 
 // Define static information
 // Collection dates for Trashbin 1
@@ -26,7 +27,7 @@ var Trashbin2CollectDates= [
                 '2019-01-03',
                 '2019-02-03',
                 '2019-03-03',
-                '2019-04-03',
+                '2019-04-16',
                 '2019-05-03',
                 '2019-06-03',
                 '2019-07-03',
@@ -48,9 +49,10 @@ function addDays(date, days) {
 var today = new Date().toISOString().substr(0, 10);
 var tomorrow = addDays(today,1);
 var tomorrow2 = tomorrow.toISOString().substr(0, 10);
+log(today);
 
 // Set default values
-   setTagValue(TagName3, {type: "boolean", title: TagName3}, false );
+   setTagValue(TagName3, {type: "boolean", title: TagName3}, collectstatus );
    setTagValue(TagName4, {type: "string", title: TagName4}, "Ingen hämtning" );
 
 // Check if bins are due for collection
@@ -58,18 +60,20 @@ var tomorrow2 = tomorrow.toISOString().substr(0, 10);
 Trashbin1CollectDates.forEach(function(Trashbin1CollectDate) {
   if (Trashbin1CollectDate === tomorrow2) {
       console.log("Hämtning av Kärl 1 i morgon");
-      setTagValue(TagName3, {type: "boolean", title: TagName3}, true );
+      collectstatus = true;
+      setTagValue(TagName3, {type: "boolean", title: TagName3}, collectstatus );
       setTagValue(TagName4, {type: "string", title: TagName4}, "Kärl 1" );
   }
 });
-  
+
 // Check if date for bin 2 is within array
 Trashbin2CollectDates.forEach(function(Trashbin2CollectDate) {
   if (Trashbin2CollectDate === tomorrow2) {
       console.log("Hämtning av Kärl 2 i morgon");
-      setTagValue(TagName3, {type: "boolean", title: TagName3}, true );
+      collectstatus = true;
+      setTagValue(TagName3, {type: "boolean", title: TagName3}, collectstatus );
       setTagValue(TagName4, {type: "string", title: TagName4}, "Kärl 2" );
   }
 });
 
-return true;
+return collectstatus;
