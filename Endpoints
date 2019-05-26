@@ -68,7 +68,10 @@ GET http://<HOMEY_IP>/api/manager/mobile/
 # Notifications
 GET http://<HOMEY_IP>/api/manager/notifications/notification/
 GET http://<HOMEY_IP>/api/manager/notifications/owner/
-await Homey.notifications.getNotifications()
+Homey.notifications.getNotifications()
+Homey.notifications.getOwners()
+Homey.notifications.deleteNotifications()
+
 
 # Presence
 GET http://<HOMEY_IP>/api/manager/presence/
