@@ -1,0 +1,54 @@
+// se.skolmaten
+
+// Catch string from flow
+// var address = args[0]; // for use with flow
+var school = "ADD SCHOOL CODE HERE";
+
+// API secrets
+var client = "ADD CLIENT SECRET CODE HERE";
+var ClientVersion = "ADD CLIENT SECRET VERSION CODE HERE";
+
+// Define Tokens
+let FlowToken1="Lunchrätt 1";
+let FlowToken2="Lunchrätt 2";
+let FlowToken3="Övrigt till lunch";
+
+// Get data from JSON feed
+async function fetchAsync () {
+let data = await (await fetch('https://skolmaten.se/api/3/menu/?school=' +school +'&client=' +client)).json();
+return data;
+}
+
+fetchAsync()
+    .then(data => {
+        // Get day of week and set day to number -1 for correct JSON data extraction 
+        var dayNumber = new Date().getDay()-1;
+
+        // Work with JSON data here
+        lunchmenu = data.weeks[0].days;
+        schoolname = data.school.name;
+
+        if (dayNumber > 4){
+            console.log("Skola: " +schoolname);
+            console.log("ingen lunch");
+            setTagValue(FlowToken1, {type: "string", title: FlowToken1}, "ingen lunch" );
+            setTagValue(FlowToken2, {type: "string", title: FlowToken2}, "" );
+            setTagValue(FlowToken3, {type: "string", title: FlowToken3}, "" );
+        } else {
+            console.log("Skola: " +schoolname);
+
+            console.log(FlowToken1 +": " +lunchmenu[dayNumber].items[0]);
+            console.log(FlowToken2 +": " +lunchmenu[dayNumber].items[1]);
+            console.log(FlowToken3 +": " +lunchmenu[dayNumber].items[2]);
+
+        // Save result to HomeyScript Tags/tokens 
+            setTagValue(FlowToken1, {type: "string", title: FlowToken1}, lunchmenu[dayNumber].items[0] );
+            setTagValue(FlowToken2, {type: "string", title: FlowToken2}, lunchmenu[dayNumber].items[1] );
+            setTagValue(FlowToken3, {type: "string", title: FlowToken3}, lunchmenu[dayNumber].items[2] );
+        };
+
+        })
+    // Error handling    
+    .catch(reason => console.log(reason.message))
+
+return true;
