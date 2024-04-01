@@ -1,27 +1,25 @@
-// Trashcollection
-
-// Define Tokens
-let TagName1 = "Sophämtning idag";
-let TagName2 = "Kärl som hämtas idag";
-let TagName3 = "Sophämtning i morgon";
-let TagName4 = "Kärl som hämtas i morgon";
+// Define Tags
+let TagName1 = "Trash collection today";
+let TagName2 = "Bin collected today";
+let TagName3 = "Trash collection tomorrow";
+let TagName4 = "Bin collected tomorrow";
 
 // Define static information
-// Collection dates for Trashbin 1
-var Trashbin1CollectDates = [
-  // Dates for Trashbin 1
+// Collection dates for Trash Bin 1
+var TrashBin1CollectDates = [
+  // Dates for Trash Bin 1
 ];
 
-// Collection dates for Trashbin 2
-var Trashbin2CollectDates = [
-  // Dates for Trashbin 2
+// Collection dates for Trash Bin 2
+var TrashBin2CollectDates = [
+  // Dates for Trash Bin 2
 ];
 
 // Utility to add days to a date
 function addDays(date, days) {
   var result = new Date(date);
   result.setDate(result.getDate() + days);
-  return result.toISOString().substr(0, 10);
+  return result.toISOString().substr(0, 10); // Convert here once
 }
 
 // Define today and tomorrow
@@ -33,39 +31,39 @@ var todayCollection = [];
 var tomorrowCollection = [];
 
 // Check today's collection
-Trashbin1CollectDates.forEach(function(date) {
+TrashBin1CollectDates.forEach(function(date) {
   if (date === today) {
-    todayCollection.push("Kärl 1");
+    todayCollection.push("Bin 1");
   }
 });
-Trashbin2CollectDates.forEach(function(date) {
+TrashBin2CollectDates.forEach(function(date) {
   if (date === today) {
-    todayCollection.push("Kärl 2");
+    todayCollection.push("Bin 2");
   }
 });
 
 // Check tomorrow's collection
-Trashbin1CollectDates.forEach(function(date) {
+TrashBin1CollectDates.forEach(function(date) {
   if (date === tomorrow) {
-    tomorrowCollection.push("Kärl 1");
+    tomorrowCollection.push("Bin 1");
   }
 });
-Trashbin2CollectDates.forEach(function(date) {
+TrashBin2CollectDates.forEach(function(date) {
   if (date === tomorrow) {
-    tomorrowCollection.push("Kärl 2");
+    tomorrowCollection.push("Bin 2");
   }
 });
 
 // Update tags for today
 tag(TagName1, todayCollection.length > 0);
-tag(TagName2, todayCollection.join(" & ") || "Ingen hämtning");
+tag(TagName2, todayCollection.join(" & ") || "No collection");
 
 // Update tags for tomorrow
 tag(TagName3, tomorrowCollection.length > 0);
-tag(TagName4, tomorrowCollection.join(" & ") || "Ingen hämtning");
+tag(TagName4, tomorrowCollection.join(" & ") || "No collection");
 
 // Log the updated tags for verification
 console.log(TagName1 + ": " + (todayCollection.length > 0));
-console.log(TagName2 + ": " + (todayCollection.join(" & ") || "Ingen hämtning"));
+console.log(TagName2 + ": " + (todayCollection.join(" & ") || "No collection"));
 console.log(TagName3 + ": " + (tomorrowCollection.length > 0));
-console.log(TagName4 + ": " + (tomorrowCollection.join(" & ") || "Ingen hämtning"));
+console.log(TagName4 + ": " + (tomorrowCollection.join(" & ") || "No collection"));
